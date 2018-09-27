@@ -4,7 +4,7 @@ import Comment from './Comment';
 
 const CommentList = (props) => {
   const commentNodes = props.data.map(comment => (
-    <Comment author={comment.author} key={comment._id} id={comment._id}>
+    <Comment author={comment.name} key={comment._id} id={comment._id}>
       { comment.text}
     </Comment>
   ));
@@ -17,9 +17,9 @@ const CommentList = (props) => {
 
 CommentList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
-    author: PropTypes.string,
+    name: PropTypes.string,
     id: PropTypes.string,
-    text: PropTypes.string,
+    squad_number: PropTypes.string,
   })),
 };
 
