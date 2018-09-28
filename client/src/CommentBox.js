@@ -45,9 +45,6 @@ class CommentBox extends Component {
           <h2>Comments:</h2>
           <CommentList data={this.state.data} />
         </div>
-        <div className="form">
-          <CommentForm author={this.state.author} text={this.state.text} />
-        </div>
         {this.state.error && <p>{this.state.error}</p>}
       </div>
     );
