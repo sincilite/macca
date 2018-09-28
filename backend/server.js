@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import Comment from './models/comments';
+import Player from './models/players';
 
 // and create our instances
 const app = express();
@@ -30,6 +31,13 @@ router.get('/comments', (req, res) => {
     Comment.find((err, comments) => {
         if (err) return res.json({success: false, error: err});
         return res.json({success: true, data: comments});
+    });
+});
+
+router.get('/players', (req, res) => {
+    Player.find({ name: "Josh Vickers" }, (err, players) => {
+        if (err) return res.json({success: false, error: err});
+        return res.json({success: true, data: players});
     });
 });
 
