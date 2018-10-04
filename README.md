@@ -29,3 +29,62 @@
     }
 
 ]);```
+
+=== Players points contribution ===
+
+```db.getCollection("players").aggregate([
+    {$unwind: '$games'},
+    {
+        $project: {
+            name: 1,
+            squad_number: 1,
+            points: {
+                $sum: "$games.points_swing"
+            }
+        }
+    },
+    {
+      $group: {
+        _id: "$_id",
+        name: { $first: "$name" },
+        squad_number: { $first: "$squad_number" },
+        points: { $sum: "$points" }
+      }
+    },
+    {
+        $sort: { points: -1 }
+    }
+])```
+
+=== Players points contribution ===
+
+Trying to include the number of games played, but there might be a problem with the games array not being defined properly as they're all null
+
+```db.getCollection("players").aggregate([
+    {$unwind: '$games'},
+    {
+        $project: {
+            name: 1,
+            squad_number: 1,
+            points: "$games.points_swing"
+        }
+    },
+    {
+      $group: {
+        _id: "$_id",
+        name: { $first: "$name" },
+        squad_number: { $first: "$squad_number" },
+        points: { $sum: "$points" },
+        total: { $sum: { $size: { "$ifNull": [ [], "$games" ] } } }
+      }
+    },
+    {
+        $sort: { points: -1 }
+    }
+])
+```
+
+
+== Notes ==
+
+The Crawley match, players have been set -2 points for the defeat, but Tranmere is -1.
